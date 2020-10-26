@@ -28,6 +28,8 @@ import {
   ApolloProvider
 } from '@apollo/client';
 
+var sharedProps = {}
+
 // Sets the default scene you want for AR and VR
 var InitialARScene = require('./js/HelloWorldSceneAR');
 
@@ -37,7 +39,7 @@ export default class ViroSample extends Component {
 
     this.state = {
       sharedProps : sharedProps
-    }
+    }git
     this._getARNavigator = this._getARNavigator.bind(this);
   }
 
