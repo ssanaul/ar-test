@@ -29,6 +29,9 @@ export default class HelloWorldSceneAR extends Component {
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroText text={this.state.text} scale={[.5, .5, .5]} position={[0, 0, -1]} style={styles.helloWorldTextStyle} />
       </ViroARScene>
+      <ViroARImageMarker target={"targetOne"} >
+        <ViroBox position={[0, .25, 0]} scale={[.5, .5, .5]} />
+      </ViroARImageMarker>
     );
   }
 
@@ -42,6 +45,14 @@ export default class HelloWorldSceneAR extends Component {
     }
   }
 }
+
+ViroARTrackingTargets.createTargets({
+  "targetOne" : {
+    source : require('./res/page.jpg'),
+    orientation : "Up",
+    physicalWidth : 0.1 // real world width in meters
+  },
+});
 
 var styles = StyleSheet.create({
   helloWorldTextStyle: {
