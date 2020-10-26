@@ -36,14 +36,9 @@ export default class ViroSample extends Component {
     super();
 
     this.state = {
-      navigatorType : defaultNavigatorType,
       sharedProps : sharedProps
     }
-    this._getExperienceSelector = this._getExperienceSelector.bind(this);
     this._getARNavigator = this._getARNavigator.bind(this);
-    this._getVRNavigator = this._getVRNavigator.bind(this);
-    this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this);
-    this._exitViro = this._exitViro.bind(this);
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
