@@ -9,6 +9,7 @@ import {
   ViroText,
   ViroConstants,
   ViroARTrackingTargets,
+  ViroARImageMarker
 } from 'react-viro';
 
 export default class HelloWorldSceneAR extends Component {
