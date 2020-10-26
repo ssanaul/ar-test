@@ -8,6 +8,7 @@
  */
 
 import React, { Component } from 'react';
+
 import {
   AppRegistry,
   Text,
@@ -18,28 +19,17 @@ import {
 } from 'react-native';
 
 import {
-  ViroVRSceneNavigator,
   ViroARSceneNavigator
 } from 'react-viro';
 
-/*
- TODO: Insert your API key below
- */
-var sharedProps = {
-  apiKey:"API_KEY_HERE",
-}
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider
+} from '@apollo/client';
 
 // Sets the default scene you want for AR and VR
 var InitialARScene = require('./js/HelloWorldSceneAR');
-var InitialVRScene = require('./js/HelloWorldScene');
-
-var UNSET = "UNSET";
-var VR_NAVIGATOR_TYPE = "VR";
-var AR_NAVIGATOR_TYPE = "AR";
-
-// This determines which type of experience to launch in, or UNSET, if the user should
-// be presented with a choice of AR or VR. By default, we offer the user a choice.
-var defaultNavigatorType = UNSET;
 
 export default class ViroSample extends Component {
   constructor() {
@@ -59,41 +49,7 @@ export default class ViroSample extends Component {
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
-    if (this.state.navigatorType == UNSET) {
-      return this._getExperienceSelector();
-    } else if (this.state.navigatorType == VR_NAVIGATOR_TYPE) {
-      return this._getVRNavigator();
-    } else if (this.state.navigatorType == AR_NAVIGATOR_TYPE) {
-      return this._getARNavigator();
-    }
-  }
-
-  // Presents the user with a choice of an AR or VR experience
-  _getExperienceSelector() {
-    return (
-      <View style={localStyles.outer} >
-        <View style={localStyles.inner} >
-
-          <Text style={localStyles.titleText}>
-            Choose your desired experience:
-          </Text>
-
-          <TouchableHighlight style={localStyles.buttons}
-            onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
-            underlayColor={'#68a0ff'} >
-
-            <Text style={localStyles.buttonText}>AR</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight style={localStyles.buttons}
-            onPress={this._getExperienceButtonOnPress(VR_NAVIGATOR_TYPE)}
-            underlayColor={'#68a0ff'} >
-
-            <Text style={localStyles.buttonText}>VR</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
-    );
+    return this._getARNavigator();
   }
 
   // Returns the ViroARSceneNavigator which will start the AR experience
@@ -103,32 +59,21 @@ export default class ViroSample extends Component {
         initialScene={{scene: InitialARScene}} />
     );
   }
-  
-  // Returns the ViroSceneNavigator which will start the VR experience
-  _getVRNavigator() {
-    return (
-      <ViroVRSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: InitialVRScene}} onExitViro={this._exitViro}/>
-    );
-  }
-
-  // This function returns an anonymous/lambda function to be used
-  // by the experience selector buttons
-  _getExperienceButtonOnPress(navigatorType) {
-    return () => {
-      this.setState({
-        navigatorType : navigatorType
-      })
-    }
-  }
-
-  // This function "exits" Viro by setting the navigatorType to UNSET.
-  _exitViro() {
-    this.setState({
-      navigatorType : UNSET
-    })
-  }
 }
+
+// Initialize Apollo Client
+const client = new ApolloClient({
+  uri: 'localhost:4000/graphql',
+  cache: new InMemoryCache()
+});
+
+const App = () => (
+  <ApolloProvider client={client}>
+    <ViroSample />
+  </ApolloProvider>
+);
+
+AppRegistry.registerComponent('MyApplication', () => App);
 
 var localStyles = StyleSheet.create({
   viroContainer :{
