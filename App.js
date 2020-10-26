@@ -39,7 +39,7 @@ export default class ViroSample extends Component {
 
     this.state = {
       sharedProps : sharedProps
-    }git
+    }
     this._getARNavigator = this._getARNavigator.bind(this);
   }
 
