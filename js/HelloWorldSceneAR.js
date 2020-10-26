@@ -31,7 +31,7 @@ export default class HelloWorldSceneAR extends Component {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroARImageMarker target={"targetOne"} >
-          <ViroBox position={[0, 0, 0]} scale={[.1, .1, .1]} />
+          <ViroText text={this.state.text} scale={[.1, .1, .1]} position={[0, 0, -1]} style={styles.helloWorldTextStyle} />
         </ViroARImageMarker>
       </ViroARScene>
     );
@@ -40,7 +40,7 @@ export default class HelloWorldSceneAR extends Component {
   _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
-        text : "Poochie nap time"
+        text : "Recognized page"
       });
     } else if (state == ViroConstants.TRACKING_NONE) {
       // Handle loss of tracking
