@@ -31,7 +31,7 @@ export default class HelloWorldSceneAR extends Component {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroARImageMarker target={"targetOne"} >
-          <ViroBox position={[0, .25, 0]} scale={[.1, .1, .1]} />
+          <ViroBox position={[0, 0, 0]} scale={[.1, .1, .1]} />
         </ViroARImageMarker>
       </ViroARScene>
     );
